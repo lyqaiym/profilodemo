@@ -1,0 +1,17 @@
+ext {
+
+    configuration = [
+            buildToolsVersion   : "30.0.3",
+            compileSdkVersion   : 30,
+            minSdkVersion       : 23,
+            targetSdkVersion    : 26,
+            mvn_release_name    : 'android',
+            mvn_release_pwd     : 'android',
+            mvn_snapshot_name   : 'android',
+            mvn_snapshot_pwd    : 'android',
+            SOURCE_COMPATIBILITY: JavaVersion.VERSION_1_8,
+            TARGET_COMPATIBILITY: JavaVersion.VERSION_1_8,
+            NDK_VERSION : '21.1.6352462'
+    ]
+
+}

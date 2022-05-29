@@ -1,0 +1,74 @@
+plugins {
+    id 'com.android.library'
+}
+apply plugin: 'maven-publish'
+apply from: rootDir.absolutePath + '/buildscript/module_upload_config_library.gradle'
+
+android {
+
+    compileSdk 29
+
+    defaultConfig {
+        minSdk 21
+        targetSdk 31
+        versionCode 1
+        versionName "1.0"
+
+        ndkVersion rootProject.ext.ndkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared"
+                cppFlags '-std=c++17'
+            }
+        }
+        ndk {
+//            abiFilters "armeabi-v7a"
+            abiFilters "armeabi-v7a","arm64-v8a"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.18.1'
+        }
+    }
+    buildTypes {
+        release {
+            crunchPngs = false
+        }
+        debug {
+            crunchPngs = false
+        }
+    }
+    buildFeatures {
+        viewBinding false
+        prefab true
+        prefabPublishing true
+    }
+    packagingOptions {
+        exclude '**/libfbjni.so'
+    }
+    prefab {
+        profilo_mmapbuf {
+            headers "../profilo_source/cpp/mmapbuf"
+//            headers "src/main/cpp/include"
+        }
+    }
+}
+
+dependencies {
+//    implementation project(':profilo')
+    implementation project(':fbjni')
+}
