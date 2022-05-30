@@ -25,12 +25,14 @@ include_directories(${profilo_BASE}/deps/zstr/)
 
 project("profilo")
 
-add_definitions(-DANDROID_VERSION_900)
-add_definitions(-DANDROID_VERSION_NUM=900)
+add_definitions(-DANDROID_VERSION_${ANDROID_SDK})
+add_definitions(-DANDROID_VERSION_NUM=${ANDROID_SDK})
 
 if (ANDROID_ABI STREQUAL "armeabi-v7a")
+    include_directories(${profilo_BASE}/cpp/profiler/unwindc/android_${ANDROID_SDK}/arm)
     set(trampoline_arm ${profilo_BASE}/deps/plthooks/trampoline_arm.c)
 else()
+    include_directories(${profilo_BASE}/cpp/profiler/unwindc/android_${ANDROID_SDK}/arm64)
     set(trampoline_arm ${profilo_BASE}/deps/plthooks/trampoline_arm64.c)
 endif ()
 
